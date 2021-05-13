@@ -1,33 +1,31 @@
 const socket = io();
-$('#inp').emojioneArea({
-    pickerPosition:'bottom',
-    inline: true,
-    hideSource: true,
-  
-    });
-$('#alert1').hide();
 $('#chat').hide();
-( function () {
-    'use strict'
-    var forms = document.querySelectorAll('.validated-form')
-    Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-          form.classList.add('was-validated')
-        }, false)
-      })
-  })()
+$('#alert1').hide();
+
 
 $(document).ready(function() {
   
     $(".toast").toast({autohide:false});
     $(".toast").toast('show');
-   
-
+    $('#inp').emojioneArea({
+    pickerPosition:'bottom',
+    inline: true,
+    hideSource: true,
+    });
+    ( function () {
+        'use strict'
+        var forms = document.querySelectorAll('.validated-form')
+        Array.prototype.slice.call(forms)
+          .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+              if (form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+              form.classList.add('was-validated')
+            }, false)
+          })
+      })()
 });
 
 $('#login-btn').click(()=>
@@ -37,17 +35,21 @@ $('#login-btn').click(()=>
     })
     $('#login').hide();
     $('#chat').show();
+    $('#alert1').show();
 })
 
 
 
 $('#send-btn').click(()=>
 {
-    socket.emit('send_msg',{
-       msg:$('#inp').val() 
-    })
-    $('#inp').val("");
-
+    if($('#inp').val()!="")
+    {
+        socket.emit('send_msg',{
+            msg:$('#inp').val() 
+         })
+         $('#inp').val("");
+     }
+   
 })
 
 socket.on('rcd_msg',(data)=>
@@ -73,16 +75,14 @@ socket.on('rcd_msg',(data)=>
     small.classList.add('me-auto');
     small.innerText = "just now";
 
-    const button = document.createElement('button');
-    button.classList.add("btn-close");
-    button.setAttribute("type","button");
+    
     toast.setAttribute("data-bs-dismiss","toast");
     toast.setAttribute("aria-label","close");
    
     toast_header.appendChild(img);
     toast_header.appendChild(strong);
     toast_header.appendChild(small);
-    toast_header.appendChild(button);
+    
     
     const div2 = document.createElement('div');
     div2.classList.add("toast-body");
@@ -92,21 +92,18 @@ socket.on('rcd_msg',(data)=>
     $('.toast-container').prepend(toast);
     $(".toast").toast({autohide:false});
     $(".toast").toast('show');
-    console.log("hii");
+    
     
 })
 
 
 socket.on('userlist',(data)=>
 {
-   
+
     if(data.user[data.user.length-1].id===socket.id){
-        $('.list-group').empty();
-    // console.log(socket.id);
-    console.log(data.user);
-    console.log("new user");
-     $('#alert1').show();
-     var wlcm = document.querySelector('#alert2');
+    $('.list-group').empty();
+    $('#alert1').show();
+     const wlcm = document.querySelector('#alert2');
      wlcm.innerText = "Welcome!! "+data.user[data.user.length-1].username;
      data.user.forEach(element => {
      const list = document.createElement('li');
@@ -117,12 +114,12 @@ socket.on('userlist',(data)=>
      span.innerText= ".";
      list.append(span);
      $('.list-group').prepend(list);
-     
    })
 }
+
 else{
-    console.log(data.user);
-    console.log("existed user");
+    const wlcm = document.querySelector('#alert2');
+    wlcm.innerText = data.user[data.user.length-1].username+" joined the Room";
     const list = document.createElement('li');
     list.classList.add("list-group-item", "d-flex", "justify-content-between", "align-items-center");
     list.innerText = data.user[data.user.length-1].username;
@@ -132,6 +129,7 @@ else{
     list.append(span);
     $('.list-group').prepend(list);
 }
+  
 })
 
 $('#logout').click(()=>
@@ -144,8 +142,8 @@ $('#logout').click(()=>
 
 socket.on('exit',(data)=>
 {
-    console.log(data.users);
-    console.log(data.outname===undefined);
+    
+    
     if((data.outname===undefined || data.outname==-1))
     { 
         data.outname=2;
@@ -182,3 +180,15 @@ socket.on('exit',(data)=>
     
    
 })
+
+
+$('#anchor1').click(function(){
+    $('#chat').hide();
+    $('.toast-container').hide();
+    });
+
+    
+$('#anchor2').click(function(){
+    $('#chat').show();
+    $('.toast-container').show();
+    });

@@ -16,8 +16,38 @@ app.use('/',express.static('public'));
 const users = [];
 const user2 = {};
 
-io.on('connection',(socket)=>
+io.sockets.on('connection',(socket)=>
 {
+    socket.on('disconnect',(data)=>
+    {
+        console.log("user disconnected" + " "+ socket.id);
+        if(users.length!=0){
+            let out,outname;
+            for(let i=0;i<users.length;i++)
+            {
+                if(users[i].id===socket.id)
+                {
+                  
+                    outname = users[i].username;
+                    out = socket.id;
+                    users.splice(i,1);
+                
+    
+                }
+    
+            }
+           
+            delete user2[socket.id];
+            
+        }
+        else{
+           
+            delete user2[socket.id];
+         
+        }
+
+    })
+
     socket.on('login',(data)=>
     {
        
@@ -31,10 +61,7 @@ io.on('connection',(socket)=>
         user2[socket.id] = data.name
         io.emit('userlist',
         {
-            user:users,
-            
-
-            
+            user:users,  
         })
     })
     socket.on('send_msg',(data)=>
@@ -68,6 +95,9 @@ io.on('connection',(socket)=>
         io.emit('exit',{users:users,out:socket.id,outname:-1});
     }
     })
+
+
+  
 })
 
 server.listen(process.env.PORT || 3000,()=>

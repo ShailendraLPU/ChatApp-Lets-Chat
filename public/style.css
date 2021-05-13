@@ -24,29 +24,9 @@ a:hover{
 }
 body
 {
-    /* background: #c0392b;  fallback for old browsers */
-/* background: -webkit-linear-gradient(to right, #8e44ad, #c0392b);  Chrome 10-25, Safari 5.1-6 */
-/* background: linear-gradient(to right, #8e44ad, #c0392b); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-/* background: #A770EF;  fallback for old browsers */
-/* background: -webkit-linear-gradient(to right, #FDB99B, #CF8BF3, #A770EF);  Chrome 10-25, Safari 5.1-6 */
-/* background: linear-gradient(to right, #FDB99B, #CF8BF3, #A770EF); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-/* background: #FF416C;  fallback for old browsers */
-/* background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);  Chrome 10-25, Safari 5.1-6 */
-/* background: linear-gradient(to right, #FF4B2B, #FF416C); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  
 background: #FC5C7D;  
 background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D);  
 background: linear-gradient(to right, #6A82FB, #FC5C7D); 
-/* background: #fc4a1a;  fallback for old browsers */
-/* background: -webkit-linear-gradient(to right, #f7b733, #fc4a1a);  Chrome 10-25, Safari 5.1-6 */
-/* background: linear-gradient(to right, #f7b733, #fc4a1a); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-     /* background: #0F2027;  fallback for old browsers */
-    /* background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  Chrome 10-25, Safari 5.1-6 */
-    /* background: linear-gradient(to right, #2C5364, #203A43, #0F2027); W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      
-     /* width: 100%; */
-    /* height: 100%; */
-    /* opacity: 0.9;  */
-    /* background-image: url('https://images.unsplash.com/photo-1580865166916-1700e6b1d4ea?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1900&q=80');  */
    
 }
