@@ -20,7 +20,7 @@ io.sockets.on('connection',(socket)=>
 {
     socket.on('disconnect',(data)=>
     {
-        console.log("user disconnected" + " "+ socket.id);
+       
         if(users.length!=0){
             let out,outname;
             for(let i=0;i<users.length;i++)
@@ -36,14 +36,15 @@ io.sockets.on('connection',(socket)=>
                 }
     
             }
-           
+            io.emit('exit',{users:users,out:out,outname:outname});
             delete user2[socket.id];
+           
             
         }
         else{
-           
+            io.emit('exit',{users:users,out:socket.id,outname:-1});
             delete user2[socket.id];
-         
+           
         }
 
     })
@@ -68,7 +69,8 @@ io.sockets.on('connection',(socket)=>
     {
         io.emit('rcd_msg',{
             msg:data.msg,
-            name:user2[socket.id]
+            name:user2[socket.id],
+            id:socket.id
         })
     })
 

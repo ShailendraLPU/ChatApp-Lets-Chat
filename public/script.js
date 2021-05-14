@@ -1,4 +1,5 @@
-const socket = io();
+
+$('#login').hide();
 $('#chat').hide();
 $('#alert1').hide();
 
@@ -7,11 +8,7 @@ $(document).ready(function() {
   
     $(".toast").toast({autohide:false});
     $(".toast").toast('show');
-    $('#inp').emojioneArea({
-    pickerPosition:'bottom',
-    inline: true,
-    hideSource: true,
-    });
+  
     ( function () {
         'use strict'
         var forms = document.querySelectorAll('.validated-form')
@@ -28,35 +25,51 @@ $(document).ready(function() {
       })()
 });
 
-$('#login-btn').click(()=>
+$('#key-btn').click(()=>
 {
-    socket.emit('login',{
-        name: $('#login-inp').val()
-    })
-    $('#login').hide();
-    $('#chat').show();
-    $('#alert1').show();
-})
-
-
-
-$('#send-btn').click(()=>
-{
-    if($('#inp').val()!="")
+    if($('#key-inp').val()==="123")
     {
+       const socket = io();
+        $('#key').hide();
+        $('#login').show();
+
+        $('#login-btn').click(()=>{
+    
+   
+            socket.emit('login',{
+                name: $('#login-inp').val()
+            })
+            $('#login').hide();
+            $('#chat').show();
+            $('#alert1').show();
+        })
+
+        
+        $('#send-btn').click(()=>
+       {
+      if($('#inp').val()!="")
+      {
+       
         socket.emit('send_msg',{
             msg:$('#inp').val() 
          })
-         $('#inp').val("");
-     }
+         $('#inp').val('');
+      }
+      
+     
    
-})
+     })
+
+     
 
 socket.on('rcd_msg',(data)=>
 {
+
+    if(data.id!=socket.id){
     const toast = document.createElement('div');
-    toast.classList.add("toast");
+    toast.classList.add("toast","mb-2");
     toast.setAttribute("aria-live","assertive");
+    
     toast.setAttribute("aria-atomic","true");
 
     const toast_header = document.createElement('div');
@@ -75,24 +88,60 @@ socket.on('rcd_msg',(data)=>
     small.classList.add('me-auto');
     small.innerText = "just now";
 
-    
-    toast.setAttribute("data-bs-dismiss","toast");
-    toast.setAttribute("aria-label","close");
-   
     toast_header.appendChild(img);
     toast_header.appendChild(strong);
     toast_header.appendChild(small);
     
-    
     const div2 = document.createElement('div');
     div2.classList.add("toast-body");
+    
+    div2.setAttribute("style","background-color:#f06c00")
     div2.innerText = data.msg;
     toast.appendChild(toast_header);
     toast.appendChild(div2);
-    $('.toast-container').prepend(toast);
+    $('.toast-container1').prepend(toast);
     $(".toast").toast({autohide:false});
     $(".toast").toast('show');
+    }
+    else
+    {
+    const toast = document.createElement('div');
+    toast.classList.add("toast","mb-2");
+    toast.setAttribute("aria-live","assertive");
     
+    toast.setAttribute("aria-atomic","true");
+
+    const toast_header = document.createElement('div');
+    toast_header.classList.add("toast-header");
+    
+
+    const img = document.createElement('img');
+    img.classList.add("rounded","me-2");
+    img.setAttribute("src","https://img.icons8.com/metro/26/000000/chat.png");
+
+
+    const strong = document.createElement('strong');
+    strong.classList.add('me-auto');
+    strong.innerText = "You";
+
+    const small = document.createElement('small');
+    small.classList.add('me-auto');
+    small.innerText = "just now";
+
+    toast_header.appendChild(img);
+    toast_header.appendChild(strong);
+    toast_header.appendChild(small);
+    
+    const div2 = document.createElement('div');
+    div2.classList.add("toast-body");
+    div2.setAttribute("style","background-color:#fdb833");
+    div2.innerText = data.msg;
+    toast.appendChild(toast_header);
+    toast.appendChild(div2);
+    $('.toast-container1').prepend(toast);
+    $(".toast").toast({autohide:false});
+    $(".toast").toast('show');
+    }
     
 })
 
@@ -136,8 +185,9 @@ $('#logout').click(()=>
 {
     socket.emit('logout');
     $('#chat').hide();
-    $('#login').show();
+    $('#login').hide();
     $('#alert1').show();
+    $('#key').show();
 })
 
 socket.on('exit',(data)=>
@@ -180,6 +230,12 @@ socket.on('exit',(data)=>
     
    
 })
+
+        
+    }
+   
+})
+
 
 
 $('#anchor1').click(function(){

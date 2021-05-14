@@ -9,13 +9,19 @@ h1{
     border-width: 2px ;
     border-color: #023e8a;
 }
+
+.nav-item a
+{
+   color:#f06c00;
+}
 a:hover{
     transform: scale(1.05);
    
 }
+
 .navbar-toggler
 {
-    background-color: #023e8a;
+    background-color: #1789fc;
 }
 .btn:hover{
     transform: scale(1.05);
@@ -24,9 +30,14 @@ a:hover{
 }
 body
 {
-  
-background: #FC5C7D;  
-background: -webkit-linear-gradient(to right, #6A82FB, #FC5C7D);  
-background: linear-gradient(to right, #6A82FB, #FC5C7D); 
-   
+color: white;
+background-image: url('https://cdn.dribbble.com/users/1162077/screenshots/4318436/pattern.png');
+opacity: 0.9;
 }
+
+.fas{
+    font-size:3.5rem;
+}
+
+
+
